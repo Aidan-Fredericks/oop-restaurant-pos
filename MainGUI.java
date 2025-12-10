@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class MainGUI extends JFrame {
     
@@ -24,7 +24,7 @@ public class MainGUI extends JFrame {
         btnCheckout = new JButton("Checkout");
 
         btnBrowseMenu.addActionListener(e -> new MenuGUI());
-        btnViewCart.addActionListener(e -> JOptionPane.showMessageDialog(this, "Cart coming soon"));
+        btnViewCart.addActionListener(e -> new CartGUI());
         btnCheckout.addActionListener(e -> JOptionPane.showMessageDialog(this, "Checkout coming soon"));
 
         panel.add(title);
