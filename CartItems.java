@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 public class CartItems {
@@ -36,10 +35,6 @@ public class CartItems {
                 items.remove(item);
             }
         }
-    }
-
-    public void removeItem(MenuItem item) {
-        items.remove(item);
     }
 
     public void removeItem(MenuItem item) {
