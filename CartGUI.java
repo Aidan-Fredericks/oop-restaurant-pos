@@ -1,26 +1,105 @@
 
-import javax.swing.JFrame;
-import javax.swing.JTextArea;
+import java.awt.*;
+import java.util.Map;
+import javax.swing.*;
 
 public class CartGUI extends JFrame {
-    private JTextArea items;
+    private JPanel itemsPanel;
 
     public CartGUI() {
         setTitle("Shopping Cart");
-        setSize(400, 300);
+        setSize(500, 400);
         setLocationRelativeTo(null);
 
-        items = new JTextArea();
-        items.setEditable(false);
-        add(items);
-        StringBuilder itemList = new StringBuilder("Items in Cart:\n");
-        for (MenuItem item : new CartItems().getItems()) {
-            itemList.append(item.getName()).append(" - $").append(item.getPrice()).append("\n");
+        itemsPanel = new JPanel();
+        itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
+
+        JScrollPane scrollPane = new JScrollPane(itemsPanel);
+        add(scrollPane, BorderLayout.CENTER);
+
+        CartItems cart = CartItems.getInstance();
+        for (Map.Entry<MenuItem, Integer> entry : cart.getItems().entrySet()) {
+            MenuItem item = entry.getKey();
+            int qty = entry.getValue();
+
+            JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel nameLabel = new JLabel(item.getName() + " - $" + item.getPrice() + " x " + qty);
+
+            JButton plusBtn = new JButton("+");
+            plusBtn.addActionListener(e -> {
+                cart.increaseQuantity(item);
+                refresh();
+            });
+
+            JButton minusBtn = new JButton("-");
+            minusBtn.addActionListener(e -> {
+                cart.decreaseQuantity(item);
+                refresh();
+            });
+
+            JButton removeBtn = new JButton("Remove");
+            removeBtn.addActionListener(e -> {
+                cart.removeItem(item);
+                refresh();
+            });
+
+            itemPanel.add(nameLabel);
+            itemPanel.add(plusBtn);
+            itemPanel.add(minusBtn);
+            itemPanel.add(removeBtn);
+
+            itemsPanel.add(itemPanel);
         }
 
-        items.setText(itemList.toString());
+        JLabel totalLabel = new JLabel("Total: $" + String.format("%.2f", cart.getTotal()));
+        totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        itemsPanel.add(totalLabel);
+
+        JButton sendBtn = new JButton("Send to Kitchen");
+        itemsPanel.add(sendBtn);
 
         setVisible(true);
+    }
+
+    private void refresh() {
+        getContentPane().removeAll();
+        itemsPanel = new JPanel();
+        itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
+        CartItems cart = CartItems.getInstance();
+        for (Map.Entry<MenuItem, Integer> entry : cart.getItems().entrySet()) {
+            MenuItem item = entry.getKey();
+            int qty = entry.getValue();
+            JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+            JLabel nameLabel = new JLabel(item.getName() + " - $" + item.getPrice() + " x " + qty);
+            JButton plusBtn = new JButton("+");
+            plusBtn.addActionListener(e -> {
+                cart.increaseQuantity(item);
+                refresh();
+            });
+            JButton minusBtn = new JButton("-");
+            minusBtn.addActionListener(e -> {
+                cart.decreaseQuantity(item);
+                refresh();
+            });
+            JButton removeBtn = new JButton("Remove");
+            removeBtn.addActionListener(e -> {
+                cart.removeItem(item);
+                refresh();
+            });
+            itemPanel.add(nameLabel);
+            itemPanel.add(plusBtn);
+            itemPanel.add(minusBtn);
+            itemPanel.add(removeBtn);
+            itemsPanel.add(itemPanel);
+        }
+        JLabel totalLabel = new JLabel("Total: $" + String.format("%.2f", cart.getTotal()));
+        totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
+        itemsPanel.add(totalLabel);
+        JButton sendBtn = new JButton("Send to Kitchen");
+        itemsPanel.add(sendBtn);
+        add(new JScrollPane(itemsPanel), BorderLayout.CENTER);
+        revalidate();
+        repaint();
     }
     
 }

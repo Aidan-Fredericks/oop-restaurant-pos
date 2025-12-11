@@ -17,6 +17,10 @@ public class ItemDetailGUI extends JFrame {
         JLabel desc = new JLabel("<html><center>" + item.getDescription() + "</center></html>", SwingConstants.CENTER);
 
         JButton addBtn = new JButton("Add to Cart");
+        addBtn.addActionListener(e -> {
+            CartItems.getInstance().addItem(item);
+            JOptionPane.showMessageDialog(this, item.getName() + " added to cart!");
+        });
 
         panel.add(name);
         panel.add(price);
