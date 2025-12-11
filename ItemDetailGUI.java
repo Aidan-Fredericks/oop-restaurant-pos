@@ -10,7 +10,7 @@ public class ItemDetailGUI extends JFrame {
 
         JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
 
-        JLabel name = new JLabel(item.getName(), SwingConstants.CENTER);
+        JLabel name = new JLabel(item.getName() + " (ID: " + item.getID() + ")", SwingConstants.CENTER);
         name.setFont(new Font("Arial", Font.BOLD, 20));
 
         JLabel price = new JLabel("Price: $" + item.getPrice(), SwingConstants.CENTER);

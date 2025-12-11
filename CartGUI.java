@@ -57,7 +57,12 @@ public class CartGUI extends JFrame {
 
         JButton sendBtn = new JButton("Send to Kitchen");
         itemsPanel.add(sendBtn);
+        sendBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Your Food Will Soon Arrive!"));
 
+        JButton btnCheckout = new JButton("Checkout");
+
+        itemsPanel.add(btnCheckout);
+        btnCheckout.addActionListener(e -> JOptionPane.showMessageDialog(this, "Checkout coming soon"));
         setVisible(true);
     }
 
@@ -86,6 +91,7 @@ public class CartGUI extends JFrame {
                 cart.removeItem(item);
                 refresh();
             });
+
             itemPanel.add(nameLabel);
             itemPanel.add(plusBtn);
             itemPanel.add(minusBtn);

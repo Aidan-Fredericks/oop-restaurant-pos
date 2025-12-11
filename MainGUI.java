@@ -21,16 +21,13 @@ public class MainGUI extends JFrame {
 
         btnBrowseMenu = new JButton("Browse Menu");
         btnViewCart = new JButton("View Cart");
-        btnCheckout = new JButton("Checkout");
 
         btnBrowseMenu.addActionListener(e -> new MenuGUI());
         btnViewCart.addActionListener(e -> new CartGUI());
-        btnCheckout.addActionListener(e -> JOptionPane.showMessageDialog(this, "Checkout coming soon"));
 
         panel.add(title);
         panel.add(btnBrowseMenu);
         panel.add(btnViewCart);
-        panel.add(btnCheckout);
 
         add(panel);
         setVisible(true);
