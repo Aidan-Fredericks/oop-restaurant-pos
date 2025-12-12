@@ -7,7 +7,7 @@ public class PaymentSummaryGUI extends JFrame{
 
     private JLabel subtotalLabel;
     private JLabel taxLabel;
-    private JLabel grandTotaLabel;
+    private JLabel grandTotalLabel;
     private JTextField tipField;
 
     private double subtotal;
@@ -58,13 +58,13 @@ public class PaymentSummaryGUI extends JFrame{
         taxLabel = new JLabel("Tax: $" + String.format("%.2f", tax));
 
         //tip
-        JPanel tipPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel tipPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         tipPanel.add(new JLabel("Tip Amount: $"));
         tipField = new JTextField("0.00", 8);
         tipPanel.add(tipField);
         double initialTip = 0;
         double initialGrandTotal = subtotal + tax + initialTip;
-        JLabel grandTotalLabel = new JLabel("Total (including tax & tip: $" + String.format("%.2f", initialGrandTotal));
+        grandTotalLabel = new JLabel("Total (including tax & tip: $" + String.format("%.2f", initialGrandTotal));
 
 
         bottomPanel.add(subtotalLabel);
@@ -83,7 +83,28 @@ public class PaymentSummaryGUI extends JFrame{
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
 
+        updateBtn.addActionListener(e -> updateGrandTotal());
+        nextBtn.addActionListener(e -> updateGrandTotal());
+
         setVisible(true);
 
+    }
+    private void updateGrandTotal(){
+        double tipAmount = getTipAmount();
+        double grandTotal = subtotal + tax + tipAmount;
+        grandTotalLabel.setText("Total (with tax & tip): $" + String.format("%.2f", grandTotal));
+    }
+
+    private double getTipAmount(){
+        String text = tipField.getText().trim();
+        if (text.isEmpty()){
+            return 0;
+        }
+        try{
+            return Double.parseDouble(text);
+        }
+        catch (NumberFormatException ex){
+            return 0;
+        }
     }
 }

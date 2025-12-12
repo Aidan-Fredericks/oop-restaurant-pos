@@ -97,6 +97,7 @@ public class CartGUI extends JFrame {
             itemPanel.add(plusBtn);
             itemPanel.add(minusBtn);
             itemPanel.add(removeBtn);
+
             itemsPanel.add(itemPanel);
         }
         JLabel totalLabel = new JLabel("Total: $" + String.format("%.2f", cart.getTotal()));
@@ -104,6 +105,10 @@ public class CartGUI extends JFrame {
         itemsPanel.add(totalLabel);
         JButton sendBtn = new JButton("Send to Kitchen");
         itemsPanel.add(sendBtn);
+        JButton btnCheckout = new JButton("Checkout");
+        itemsPanel.add(btnCheckout);
+        btnCheckout.addActionListener(e -> {PaymentSummaryGUI summary = new PaymentSummaryGUI();});
+
         add(new JScrollPane(itemsPanel), BorderLayout.CENTER);
         revalidate();
         repaint();
