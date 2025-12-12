@@ -8,7 +8,7 @@ public class ItemDetailGUI extends JFrame {
         setSize(400, 300);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(4, 1, 10, 10));
+        JPanel panel = new JPanel(new GridLayout(5, 1, 10, 10));
 
         JLabel name = new JLabel(item.getName() + " (ID: " + item.getID() + ")", SwingConstants.CENTER);
         name.setFont(new Font("Arial", Font.BOLD, 20));
@@ -22,10 +22,17 @@ public class ItemDetailGUI extends JFrame {
             JOptionPane.showMessageDialog(this, item.getName() + " added to cart!");
         });
 
+        JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(e -> {
+            dispose();
+            new MenuGUI();
+        });
+
         panel.add(name);
         panel.add(price);
         panel.add(desc);
         panel.add(addBtn);
+        panel.add(backBtn);
 
         add(panel);
         setVisible(true);
