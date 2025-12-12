@@ -124,6 +124,12 @@ public class CartGUI extends JFrame {
         JButton sendBtn = new JButton("Send to Kitchen");
         itemsPanel.add(sendBtn);
 
+        JButton btnCheckout = new JButton("Checkout");
+        itemsPanel.add(btnCheckout);
+        btnCheckout.addActionListener(e -> {
+            new PaymentSummaryGUI();
+        });
+
         add(new JScrollPane(itemsPanel), BorderLayout.CENTER);
 
         JButton backBtn = new JButton("Back");
