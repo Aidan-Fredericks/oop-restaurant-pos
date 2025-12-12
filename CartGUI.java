@@ -59,10 +59,11 @@ public class CartGUI extends JFrame {
         itemsPanel.add(sendBtn);
         sendBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Your Food Will Soon Arrive!"));
 
+        //checkout button leads to the Payment Summaruy GUI
         JButton btnCheckout = new JButton("Checkout");
-
         itemsPanel.add(btnCheckout);
-        btnCheckout.addActionListener(e -> JOptionPane.showMessageDialog(this, "Checkout coming soon"));
+        btnCheckout.addActionListener(e -> {PaymentSummaryGUI summary = new PaymentSummaryGUI();});
+
         setVisible(true);
     }
 
