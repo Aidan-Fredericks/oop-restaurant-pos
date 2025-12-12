@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.util.Map;
 import javax.swing.*;
@@ -59,10 +58,23 @@ public class CartGUI extends JFrame {
         itemsPanel.add(sendBtn);
         sendBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Your Food Will Soon Arrive!"));
 
-        //checkout button leads to the Payment Summaruy GUI
         JButton btnCheckout = new JButton("Checkout");
         itemsPanel.add(btnCheckout);
-        btnCheckout.addActionListener(e -> {PaymentSummaryGUI summary = new PaymentSummaryGUI();});
+        btnCheckout.addActionListener(e -> {
+            new PaymentSummaryGUI();
+        });
+
+
+        JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(e -> {
+            dispose();
+            new MainGUI();
+        });
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bottomPanel.add(backBtn);
+
+        add(bottomPanel, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -72,21 +84,26 @@ public class CartGUI extends JFrame {
         itemsPanel = new JPanel();
         itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
         CartItems cart = CartItems.getInstance();
+
         for (Map.Entry<MenuItem, Integer> entry : cart.getItems().entrySet()) {
             MenuItem item = entry.getKey();
             int qty = entry.getValue();
+
             JPanel itemPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             JLabel nameLabel = new JLabel(item.getName() + " - $" + item.getPrice() + " x " + qty);
+
             JButton plusBtn = new JButton("+");
             plusBtn.addActionListener(e -> {
                 cart.increaseQuantity(item);
                 refresh();
             });
+
             JButton minusBtn = new JButton("-");
             minusBtn.addActionListener(e -> {
                 cart.decreaseQuantity(item);
                 refresh();
             });
+
             JButton removeBtn = new JButton("Remove");
             removeBtn.addActionListener(e -> {
                 cart.removeItem(item);
@@ -99,14 +116,28 @@ public class CartGUI extends JFrame {
             itemPanel.add(removeBtn);
             itemsPanel.add(itemPanel);
         }
+
         JLabel totalLabel = new JLabel("Total: $" + String.format("%.2f", cart.getTotal()));
         totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
         itemsPanel.add(totalLabel);
+
         JButton sendBtn = new JButton("Send to Kitchen");
         itemsPanel.add(sendBtn);
+
         add(new JScrollPane(itemsPanel), BorderLayout.CENTER);
+
+        JButton backBtn = new JButton("Back");
+        backBtn.addActionListener(e -> {
+            dispose();
+            new MainGUI();
+        });
+
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        bottomPanel.add(backBtn);
+
+        add(bottomPanel, BorderLayout.SOUTH);
+
         revalidate();
         repaint();
     }
-    
 }
