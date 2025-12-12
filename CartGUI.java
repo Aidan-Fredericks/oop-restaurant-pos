@@ -123,6 +123,8 @@ public class CartGUI extends JFrame {
 
         JButton sendBtn = new JButton("Send to Kitchen");
         itemsPanel.add(sendBtn);
+        sendBtn.addActionListener(e -> JOptionPane.showMessageDialog(this, "Your Food Will Soon Arrive!"));
+
 
         JButton btnCheckout = new JButton("Checkout");
         itemsPanel.add(btnCheckout);
