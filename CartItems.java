@@ -19,6 +19,10 @@ public class CartItems {
     public void addItem(MenuItem item) {
         items.put(item, items.getOrDefault(item, 0) + 1);
     }
+    
+    public void clear() {
+        items.clear();
+    }
 
     public void increaseQuantity(MenuItem item) {
         if (items.containsKey(item)) {

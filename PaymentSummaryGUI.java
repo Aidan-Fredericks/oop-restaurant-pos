@@ -9,6 +9,9 @@ public class PaymentSummaryGUI extends JFrame{
     private JLabel taxLabel;
     private JLabel grandTotalLabel;
     private JTextField tipField;
+    private JButton tip15Btn;
+    private JButton tip18Btn;
+    private JButton tip20Btn;
 
     private double subtotal;
     private double tax;
@@ -59,8 +62,18 @@ public class PaymentSummaryGUI extends JFrame{
 
         //tip
         JPanel tipPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        tipPanel.add(new JLabel("Tip Amount: $"));
+        tipPanel.add(new JLabel("Tip: "));
+
+        tip15Btn = new JButton("15%");
+        tip18Btn = new JButton("18%");
+        tip20Btn = new JButton("20%");
+
         tipField = new JTextField("0.00", 8);
+
+        tipPanel.add(tip15Btn);
+        tipPanel.add(tip18Btn);
+        tipPanel.add(tip20Btn);
+        tipPanel.add(new JLabel("$"));
         tipPanel.add(tipField);
         double initialTip = 0;
         double initialGrandTotal = subtotal + tax + initialTip;
@@ -82,9 +95,26 @@ public class PaymentSummaryGUI extends JFrame{
 
         mainPanel.add(bottomPanel, BorderLayout.SOUTH);
         setContentPane(mainPanel);
-
+        tip15Btn.addActionListener(e -> setTipByPercentage(0.15));
+        tip18Btn.addActionListener(e -> setTipByPercentage(0.18));
+        tip20Btn.addActionListener(e -> setTipByPercentage(0.20));
         updateBtn.addActionListener(e -> updateGrandTotal());
-        nextBtn.addActionListener(e -> updateGrandTotal());
+        nextBtn.addActionListener(e -> {
+            double tipAmount = getTipAmount();
+            double grandTotal = subtotal + tax + tipAmount;
+
+            Receipt receipt = new Receipt(
+                    CartItems.getInstance().getItems(),
+                    subtotal,
+                    tax,
+                    tipAmount
+            );
+
+            CartItems.getInstance().clear();
+            dispose();
+            new ReceiptGUI(receipt);
+        });
+
 
         setVisible(true);
 
@@ -95,15 +125,25 @@ public class PaymentSummaryGUI extends JFrame{
         grandTotalLabel.setText("Total (with tax & tip): $" + String.format("%.2f", grandTotal));
     }
 
-    private double getTipAmount(){
+    private void setTipByPercentage(double percent) {
+        double tipAmount = subtotal * percent;
+        tipField.setText(String.format("%.2f", tipAmount));
+        updateGrandTotal();
+    }
+    private double getTipAmount() {
         String text = tipField.getText().trim();
-        if (text.isEmpty()){
+
+        if (text.isEmpty()) {
             return 0;
         }
-        try{
-            return Double.parseDouble(text);
-        }
-        catch (NumberFormatException ex){
+
+        try {
+            double value = Double.parseDouble(text);
+            if (value < 0) {
+                return 0;
+            }
+            return value;
+        } catch (NumberFormatException ex) {
             return 0;
         }
     }
