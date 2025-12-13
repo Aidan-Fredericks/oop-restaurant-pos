@@ -20,12 +20,12 @@ public class ItemDetailGUI extends JFrame {
         addBtn.addActionListener(e -> {
             CartItems.getInstance().addItem(item);
             JOptionPane.showMessageDialog(this, item.getName() + " added to cart!");
+            dispose();
         });
 
         JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
             dispose();
-            new MenuGUI();
         });
 
         panel.add(name);

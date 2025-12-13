@@ -62,13 +62,14 @@ public class CartGUI extends JFrame {
         itemsPanel.add(btnCheckout);
         btnCheckout.addActionListener(e -> {
             new PaymentSummaryGUI();
+            CartItems.getInstance().clear();
+            dispose();
         });
 
 
         JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
             dispose();
-            new MainGUI();
         });
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -137,7 +138,6 @@ public class CartGUI extends JFrame {
         JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
             dispose();
-            new MainGUI();
         });
 
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

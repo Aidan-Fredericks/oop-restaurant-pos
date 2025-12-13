@@ -22,7 +22,6 @@ public class MenuGUI extends JFrame {
         JButton backBtn = new JButton("Back");
         backBtn.addActionListener(e -> {
             dispose();
-            new MainGUI();
         });
 
         JPanel bottom = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -45,7 +44,6 @@ public class MenuGUI extends JFrame {
 
             JButton viewBtn = new JButton("View Details");
             viewBtn.addActionListener(e -> {
-                dispose();
                 new ItemDetailGUI(item);
             });
 
