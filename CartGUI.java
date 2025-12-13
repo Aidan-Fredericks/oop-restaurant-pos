@@ -60,11 +60,7 @@ public class CartGUI extends JFrame {
 
         JButton btnCheckout = new JButton("Checkout");
         itemsPanel.add(btnCheckout);
-        btnCheckout.addActionListener(e -> {
-            new PaymentSummaryGUI();
-            CartItems.getInstance().clear();
-            dispose();
-        });
+        btnCheckout.addActionListener(e -> checkout());
 
 
         JButton backBtn = new JButton("Back");
@@ -78,6 +74,12 @@ public class CartGUI extends JFrame {
         add(bottomPanel, BorderLayout.SOUTH);
 
         setVisible(true);
+    }
+
+    public void checkout() {
+        new PaymentSummaryGUI();
+        CartItems.getInstance().clear();
+        dispose();
     }
 
     private void refresh() {
@@ -129,9 +131,7 @@ public class CartGUI extends JFrame {
 
         JButton btnCheckout = new JButton("Checkout");
         itemsPanel.add(btnCheckout);
-        btnCheckout.addActionListener(e -> {
-            new PaymentSummaryGUI();
-        });
+        btnCheckout.addActionListener(e -> checkout());
 
         add(new JScrollPane(itemsPanel), BorderLayout.CENTER);
 
