@@ -12,7 +12,7 @@ public class ReceiptGUI extends JFrame {
 
         JLabel paymentLabel = new JLabel(
                 "<html><center>Please tap / insert / swipe your card<br/>" +
-                "<b>Payment Approved ✓</b></center></html>",
+                "<b>Thank you</b></center></html>",
                 SwingConstants.CENTER
         );
         paymentLabel.setFont(new Font("Arial", Font.BOLD, 14));
